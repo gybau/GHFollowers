@@ -16,7 +16,51 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        window?.windowScene = windowScene
+        window?.rootViewController = createTabbbar()
+        window?.makeKeyAndVisible()
+    }
+    
+    
+    func createSearchNC() -> UINavigationController {
+        let searchVC = SearchVC()
+        searchVC.title = "Search"
+        searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
+        
+        let searchNavBarAppearance = UINavigationBarAppearance()
+        searchNavBarAppearance.configureWithDefaultBackground()
+        
+        UINavigationBar.appearance().scrollEdgeAppearance = searchNavBarAppearance
+        
+        return UINavigationController(rootViewController: searchVC)
+    }
+    
+    
+    func createFavoritesNC() -> UINavigationController {
+        let favoritesVC = FavoritesListVC()
+        favoritesVC.title = "Favorites"
+        favoritesVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+        
+        return UINavigationController(rootViewController: favoritesVC)
+    }
+    
+    
+    func createTabbbar() -> UITabBarController {
+        let tabbar = UITabBarController()
+        
+        let tabbarAppearance = UITabBarAppearance()
+        tabbarAppearance.configureWithDefaultBackground()
+        
+        UITabBar.appearance().tintColor = .systemGreen
+        UITabBar.appearance().scrollEdgeAppearance = tabbarAppearance
+        
+        
+        tabbar.viewControllers = [createSearchNC(), createFavoritesNC()]
+        
+        return tabbar
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
