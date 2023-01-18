@@ -22,6 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.rootViewController = createTabbbar()
         window?.makeKeyAndVisible()
+        
+        configureNavigationBar()
     }
     
     
@@ -56,6 +58,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabbar.viewControllers = [createSearchNC(), createFavoritesNC()]
         
         return tabbar
+    }
+    
+    
+    func configureNavigationBar() {
+        let navBarAppearance = UINavigationBar.appearance()
+        navBarAppearance.tintColor = .systemGreen
+        navBarAppearance.prefersLargeTitles = true
     }
 
     
