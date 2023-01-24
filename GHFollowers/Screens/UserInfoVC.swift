@@ -11,7 +11,7 @@ class UserInfoVC: UIViewController {
     
     var username: String!
     
-    var headerView = UIView()
+    var headerView  = UIView()
     var itemViewOne = UIView()
     var itemViewTwo = UIView()
     
