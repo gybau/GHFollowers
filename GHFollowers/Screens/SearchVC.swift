@@ -68,7 +68,7 @@ class SearchVC: UIViewController {
     private func configureTextField() {
         view.addSubview(usernameTextField)
         usernameTextField.delegate = self
-        usernameTextField.text = "johnnyehayes31"
+        usernameTextField.text = "sallen0400"
         
         NSLayoutConstraint.activate([
             usernameTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 48),
