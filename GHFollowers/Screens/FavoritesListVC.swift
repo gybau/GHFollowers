@@ -11,7 +11,15 @@ class FavoritesListVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .systemBlue
+        
+        PersistenceManager.retrieveFavorites { result in
+            switch result {
+            case .failure(let error):
+                break
+            case .success(let favorites):
+                print(favorites)
+            }
+        }
     }
 }
