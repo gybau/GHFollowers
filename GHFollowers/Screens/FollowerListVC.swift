@@ -40,9 +40,14 @@ class FollowerListVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        configureNavBar()
     }
     
+    func configureNavBar() {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        navigationItem.rightBarButtonItem = addButton
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
     
     func configureViewController() {
         view.backgroundColor = .systemBackground
@@ -107,7 +112,13 @@ class FollowerListVC: UIViewController {
         snapshot.appendItems(followers)
         DispatchQueue.main.async { self.dataSource.apply(snapshot, animatingDifferences: true) }
     }
+    
+    
+    @objc func addButtonTapped() {
+        print("Add button tapped")
+    }
 }
+
 
 extension FollowerListVC: UICollectionViewDelegate {
     
