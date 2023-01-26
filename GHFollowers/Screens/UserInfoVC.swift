@@ -7,9 +7,8 @@
 
 import UIKit
 
-protocol UserInfoVCDelegate: class {
-    func didTapGitHubProfile(for user: User)
-    func didTapGetFollowers(for user: User)
+protocol UserInfoVCDelegate: AnyObject {
+    func didRequestFollowers(for username: String)
 }
 
 class UserInfoVC: GFDataLoadingVC {
@@ -23,7 +22,7 @@ class UserInfoVC: GFDataLoadingVC {
     
     var itemViews: [UIView] = []
     
-    weak var delegate: FollowerListVCDelegate!
+    weak var delegate: UserInfoVCDelegate!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,15 +62,8 @@ class UserInfoVC: GFDataLoadingVC {
     
     
     private func configureUIElements(user: User) {
-        
-        let repoItemVC          = GFRepoItemVC(user: user)
-        repoItemVC.delegate     = self
-        
-        let followerItemVC      = GFFollowerItemVC(user: user)
-        followerItemVC.delegate = self
-        
-        self.add(childVC: repoItemVC, to: self.itemViewOne)
-        self.add(childVC: followerItemVC, to: self.itemViewTwo)
+        self.add(childVC: GFRepoItemVC(user: user, delegate: self), to: self.itemViewOne)
+        self.add(childVC: GFFollowerItemVC(user: user, delegate: self), to: self.itemViewTwo)
         self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
         self.dateLabel.text = "On GitHub since \(user.createdAt.convertToMonthYearFormat())"
     }
@@ -122,11 +114,8 @@ class UserInfoVC: GFDataLoadingVC {
     }
 }
 
-
-extension UserInfoVC: UserInfoVCDelegate {
-
+extension UserInfoVC: RepoItemVCDelegate {
     func didTapGitHubProfile(for user: User) {
-        // Show Safari View Controller
         guard let url = URL(string: user.htmlUrl) else {
             presentGFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid", buttonTitle: "Ok")
             return
@@ -134,11 +123,12 @@ extension UserInfoVC: UserInfoVCDelegate {
         
         presentSafariVC(with: url)
     }
-    
+}
+
+extension UserInfoVC: FollowerItemVCDelegate {
     func didTapGetFollowers(for user: User) {
-        // Dismiss VC
-        // Tell followers list screen the new user
         delegate.didRequestFollowers(for: user.login)
         dismissVC()
     }
 }
+
