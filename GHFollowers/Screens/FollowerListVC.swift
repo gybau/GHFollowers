@@ -11,7 +11,7 @@ protocol FollowerListVCDelegate: class {
     func didRequestFollowers(for username: String)
 }
 
-class FollowerListVC: UIViewController {
+class FollowerListVC: GFDataLoadingVC {
     
     enum Section {
         case main
@@ -23,10 +23,25 @@ class FollowerListVC: UIViewController {
     var page = 1
     var hasMoreFollowers = true
     
+    var searchController: UISearchController!
+    
     var followers: [Follower] = []
     var filteredFollowers: [Follower] = []
     
     var isSearching: Bool = false
+    
+    
+    init(username: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.username = username
+        title = username
+    }
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +59,7 @@ class FollowerListVC: UIViewController {
     }
     
     func configureNavBar() {
+        title = username
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         navigationItem.rightBarButtonItem = addButton
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -63,7 +79,7 @@ class FollowerListVC: UIViewController {
     
     
     func configureSearchController() {
-        let searchController = UISearchController()
+        searchController = UISearchController()
         searchController.searchResultsUpdater   = self
         searchController.searchBar.delegate     = self
         searchController.searchBar.placeholder  = "Search for a username"
