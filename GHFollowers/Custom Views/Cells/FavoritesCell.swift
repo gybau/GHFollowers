@@ -37,19 +37,19 @@ class FavoritesCell: UITableViewCell {
     
     
     private func configure() {
-        addSubviews(avatarImage, usernameLabel)
+        contentView.addSubviews(avatarImage, usernameLabel)
         
         accessoryType = .disclosureIndicator
         
         NSLayoutConstraint.activate([
-            avatarImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            avatarImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
+            avatarImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            avatarImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
             avatarImage.heightAnchor.constraint(equalToConstant: 60),
             avatarImage.widthAnchor.constraint(equalToConstant: 60),
             
-            usernameLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            usernameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             usernameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: 24),
-            usernameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding)
+            usernameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding)
         ])
     }
 }
