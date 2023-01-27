@@ -9,8 +9,8 @@ import UIKit
 
 class GFDataLoadingVC: UIViewController {
     
-    
     var containerView: UIView!
+    
     
     func showLoadingView() {
         containerView = UIView(frame: view.bounds)

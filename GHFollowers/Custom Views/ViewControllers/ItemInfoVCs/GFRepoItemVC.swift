@@ -15,6 +15,7 @@ class GFRepoItemVC: GFItemInfoVC {
 
     weak var delegate: RepoItemVCDelegate!
     
+    
     init(user: User, delegate: RepoItemVCDelegate) {
         super.init(user: user)
         self.delegate = delegate
@@ -37,6 +38,7 @@ class GFRepoItemVC: GFItemInfoVC {
         itemViewTwo.set(itemInfoType: .gists, withCount: user.publicGists)
         actionButton.set(backgroundColor: .systemPurple, title: "GitHub Profile")
     }
+    
     
     override func actionButtonTapped() {
         delegate.didTapGitHubProfile(for: user)

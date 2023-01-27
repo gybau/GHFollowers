@@ -13,6 +13,7 @@ class FavoritesListVC: GFDataLoadingVC {
     
     var favorites: [Follower] = []
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
@@ -52,16 +53,21 @@ class FavoritesListVC: GFDataLoadingVC {
             case .failure(let error):
                 self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "Ok")
             case .success(let favorites):
-                guard !favorites.isEmpty else {
-                    self.showEmptyStateView(with: "No favorites?\nAdd one on the follower screen", in: self.view)
-                    return
-                }
-                DispatchQueue.main.async {
-                    self.favorites = favorites
-                    self.tableView.reloadData()
-                    self.view.bringSubviewToFront(self.tableView)
-                }
+                self.updateUI(with: favorites)
             }
+        }
+    }
+    
+    
+    func updateUI(with favorites: [Follower]) {
+        guard !favorites.isEmpty else {
+            self.showEmptyStateView(with: "No favorites?\nAdd one on the follower screen", in: self.view)
+            return
+        }
+        DispatchQueue.main.async {
+            self.favorites = favorites
+            self.tableView.reloadData()
+            self.view.bringSubviewToFront(self.tableView)
         }
     }
 }
@@ -80,12 +86,14 @@ extension FavoritesListVC: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let favorite = favorites[indexPath.row]
         let destinationVC = FollowerListVC(username: favorite.login)
         
         navigationController?.pushViewController(destinationVC, animated: true)
     }
+    
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard editingStyle == .delete else { return }

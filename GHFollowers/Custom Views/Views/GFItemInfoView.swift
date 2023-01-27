@@ -11,17 +11,18 @@ enum ItemInfoType {
     case repos, gists, followers, following
 }
 
-
 class GFItemInfoView: UIView {
 
     var symbolImageView     = UIImageView()
     var titleLabel          = GFTitleLabel(textAlignment: .left, fontSize: 14)
     var countLabel          = GFTitleLabel(textAlignment: .left, fontSize: 14)
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

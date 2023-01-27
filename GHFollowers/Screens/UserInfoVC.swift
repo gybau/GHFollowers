@@ -24,6 +24,7 @@ class UserInfoVC: GFDataLoadingVC {
     
     weak var delegate: UserInfoVCDelegate!
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
@@ -70,7 +71,6 @@ class UserInfoVC: GFDataLoadingVC {
     
     
     private func layoutUI() {
-        
         itemViews = [headerView, itemViewOne, itemViewTwo, dateLabel]
         
         let padding: CGFloat    = 20
@@ -115,6 +115,7 @@ class UserInfoVC: GFDataLoadingVC {
 }
 
 extension UserInfoVC: RepoItemVCDelegate {
+    
     func didTapGitHubProfile(for user: User) {
         guard let url = URL(string: user.htmlUrl) else {
             presentGFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid", buttonTitle: "Ok")
@@ -126,6 +127,7 @@ extension UserInfoVC: RepoItemVCDelegate {
 }
 
 extension UserInfoVC: FollowerItemVCDelegate {
+    
     func didTapGetFollowers(for user: User) {
         delegate.didRequestFollowers(for: user.login)
         dismissVC()

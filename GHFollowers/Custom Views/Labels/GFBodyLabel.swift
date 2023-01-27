@@ -25,6 +25,7 @@ class GFBodyLabel: UILabel {
         self.textAlignment = textAlignment
     }
     
+    
     private func configure() {
         textColor                   = .secondaryLabel
         font                        = UIFont.preferredFont(forTextStyle: .body)

@@ -25,6 +25,7 @@ class GFSecondaryTitleLabel: UILabel {
         self.font = UIFont.systemFont(ofSize: fontSize, weight: .medium)
     }
     
+    
     private func configure() {
         textColor                   = .secondaryLabel
         adjustsFontSizeToFitWidth   = true

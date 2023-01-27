@@ -15,6 +15,7 @@ class GFFollowerItemVC: GFItemInfoVC {
 
     weak var delegate: FollowerItemVCDelegate!
     
+    
     init(user: User, delegate: FollowerItemVCDelegate) {
         super.init(user: user)
         self.delegate = delegate
