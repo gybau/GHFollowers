@@ -36,7 +36,7 @@ class GFRepoItemVC: GFItemInfoVC {
     private func configureItems() {
         itemViewOne.set(itemInfoType: .repos, withCount: user.publicRepos)
         itemViewTwo.set(itemInfoType: .gists, withCount: user.publicGists)
-        actionButton.set(backgroundColor: .systemPurple, title: "GitHub Profile")
+        actionButton.set(color: .systemPurple, title: "GitHub Profile")
     }
     
     
