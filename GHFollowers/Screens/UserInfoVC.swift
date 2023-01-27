@@ -48,16 +48,24 @@ class UserInfoVC: GFDataLoadingVC {
     
     
     func getUserInfo() {
-        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .failure(let error):
-                self.presentGFAlertOnMainThread(title: "Something went wrong.", message: error.rawValue, buttonTitle: "Ok")
-                return
-            case .success(let user):
-                DispatchQueue.main.async { self.configureUIElements(user: user) }
+        showLoadingView()
+        
+        defer {
+            dismissLoadingView()
+        }
+        
+        Task {
+            do {
+                let user = try await NetworkManager.shared.getUserInfo(for: username)
+                configureUIElements(user: user)
+            } catch {
+                if let gfError = error as? GFError {
+                    presentGFAlert(title: "Something went wrong", message: gfError.rawValue, buttonTitle: "Ok")
+                } else {
+                    presentDefaultAlert()
+                }
             }
+            
         }
     }
     
@@ -118,7 +126,7 @@ extension UserInfoVC: RepoItemVCDelegate {
     
     func didTapGitHubProfile(for user: User) {
         guard let url = URL(string: user.htmlUrl) else {
-            presentGFAlertOnMainThread(title: "Invalid URL", message: "The URL attached to this user is invalid", buttonTitle: "Ok")
+            presentGFAlert(title: "Invalid URL", message: "The URL attached to this user is invalid", buttonTitle: "Ok")
             return
         }
         
